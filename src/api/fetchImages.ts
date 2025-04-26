@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { FetchImagesResponse } from '../types';
 
-const API_KEY = '0_W_FULD15IJNDteMKhHrEjUu4_V6tBCVlb3oyDHBkk';
+const API_KEY = '47660157-57325717b13f34e4491083279';
 const BASE_URL = 'https://pixabay.com/api/';
 
 export const fetchImages = async (query: string, page: number = 1): Promise<FetchImagesResponse> => {
