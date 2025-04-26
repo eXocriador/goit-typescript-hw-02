@@ -1,9 +1,10 @@
 import { Image } from "../../types";
 import ImageGalleryItem from "../ImageGalleryItem/ImageGalleryItem";
+import styles from "./ImageGallery.module.css";
 
 interface ImageGalleryProps {
   images: Image[];
-  onImageClick: (largeImageURL: string, tags: string) => void;
+  onImageClick: (index: number) => void;
 }
 
 const ImageGallery: React.FC<ImageGalleryProps> = ({
@@ -11,9 +12,13 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({
   onImageClick
 }) => {
   return (
-    <ul>
-      {images.map((image) => (
-        <ImageGalleryItem key={image.id} image={image} onClick={onImageClick} />
+    <ul className={styles.gallery}>
+      {images.map((image, index) => (
+        <ImageGalleryItem
+          key={`${image.id}-${index}`}
+          image={image}
+          onClick={() => onImageClick(index)}
+        />
       ))}
     </ul>
   );

@@ -12,10 +12,8 @@ const App = () => {
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);
   const [status, setStatus] = useState<Status>("idle");
-  const [selectedImage, setSelectedImage] = useState<{
-    largeImageURL: string;
-    tags: string;
-  } | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [photoIndex, setPhotoIndex] = useState(0);
 
   useEffect(() => {
     if (!query) return;
@@ -41,12 +39,13 @@ const App = () => {
     setImages([]);
   };
 
-  const openModal = (largeImageURL: string, tags: string) => {
-    setSelectedImage({ largeImageURL, tags });
+  const openModal = (index: number) => {
+    setPhotoIndex(index);
+    setIsModalOpen(true);
   };
 
   const closeModal = () => {
-    setSelectedImage(null);
+    setIsModalOpen(false);
   };
 
   const loadMore = () => {
@@ -61,11 +60,16 @@ const App = () => {
       {images.length > 0 && status === "resolved" && (
         <Button onClick={loadMore} />
       )}
-      {selectedImage && (
+      {isModalOpen && (
         <Modal
-          largeImageURL={selectedImage.largeImageURL}
-          tags={selectedImage.tags}
+          images={images}
+          photoIndex={photoIndex}
+          isOpen={isModalOpen}
           onClose={closeModal}
+          onMovePrev={() =>
+            setPhotoIndex((photoIndex + images.length - 1) % images.length)
+          }
+          onMoveNext={() => setPhotoIndex((photoIndex + 1) % images.length)}
         />
       )}
     </div>

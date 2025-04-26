@@ -1,4 +1,5 @@
 import { FormEvent, useState } from "react";
+import styles from "./SearchBar.module.css";
 
 interface SearchbarProps {
   onSubmit: (query: string) => void;
@@ -9,13 +10,16 @@ const Searchbar: React.FC<SearchbarProps> = ({ onSubmit }) => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (query.trim() === "") return;
     onSubmit(query.trim());
+    setQuery("");
   };
 
   return (
-    <header>
-      <form onSubmit={handleSubmit}>
+    <header className={styles.searchbar}>
+      <form className={styles.searchForm} onSubmit={handleSubmit}>
         <input
+          className={styles.searchInput}
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
@@ -23,7 +27,9 @@ const Searchbar: React.FC<SearchbarProps> = ({ onSubmit }) => {
           autoFocus
           placeholder="Search images..."
         />
-        <button type="submit">Search</button>
+        <button type="submit" className={styles.searchButton}>
+          Search
+        </button>
       </form>
     </header>
   );

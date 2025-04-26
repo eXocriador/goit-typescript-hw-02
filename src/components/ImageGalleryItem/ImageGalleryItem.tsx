@@ -1,8 +1,9 @@
-import { Image } from "../types";
+import styles from "./ImageGalleryItem.module.css";
+import { Image } from "../../types";
 
 interface ImageGalleryItemProps {
   image: Image;
-  onClick: (largeImageURL: string, tags: string) => void;
+  onClick: () => void;
 }
 
 const ImageGalleryItem: React.FC<ImageGalleryItemProps> = ({
@@ -10,12 +11,8 @@ const ImageGalleryItem: React.FC<ImageGalleryItemProps> = ({
   onClick
 }) => {
   return (
-    <li>
-      <img
-        src={image.webformatURL}
-        alt={image.tags}
-        onClick={() => onClick(image.largeImageURL, image.tags)}
-      />
+    <li className={styles.galleryItem} onClick={onClick}>
+      <img src={image.webformatURL} alt={image.tags} />
     </li>
   );
 };
